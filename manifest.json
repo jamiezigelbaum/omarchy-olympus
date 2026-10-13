@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "jamiezigelbaum.olympus",
+  "name": "Olympus",
+  "version": "0.1.0",
+  "author": "Jamie Zigelbaum",
+  "license": "MIT",
+  "description": "Olympus in the Omarchy bar: running or stopped, indexing progress, and when something needs you, with a panel that opens the dashboard.",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "Olympus",
+    "description": "Olympus's state in plain words. Left click for detail, right click to open the dashboard, middle click to check again.",
+    "category": "AI",
+    "aliases": ["olympus"],
+    "allowMultiple": false,
+    "defaultSection": "right",
+    "defaults": {
+      "refreshIntervalSec": 60,
+      "showLabel": true,
+      "olympusPath": ""
+    },
+    "schema": [
+      { "key": "refreshIntervalSec", "type": "integer", "label": "Check every (seconds)", "min": 15, "max": 3600, "step": 15, "defaultValue": 60 },
+      { "key": "showLabel", "type": "boolean", "label": "Show words beside the icon", "defaultValue": true, "description": "Off shows only the mountain, coloured by state." },
+      { "key": "olympusPath", "type": "path", "label": "olympus command", "defaultValue": "", "description": "Optional. Defaults to ~/.local/bin/olympus." }
+    ]
+  }
+}

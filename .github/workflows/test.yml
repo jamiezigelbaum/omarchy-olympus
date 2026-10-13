@@ -1,0 +1,21 @@
+name: test
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Plain-words logic
+        run: node --test tests/status.test.js
+      - name: Manifest shape
+        run: |
+          jq -e '.schemaVersion == 1 and .id == "jamiezigelbaum.olympus" and (.kinds | index("bar-widget")) and (.entryPoints.barWidget | test("^[A-Za-z0-9_.-]+\\.qml$"))' manifest.json
+          test -f "$(jq -r .entryPoints.barWidget manifest.json)"
