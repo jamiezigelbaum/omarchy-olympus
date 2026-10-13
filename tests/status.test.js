@@ -9,8 +9,8 @@ const vm = require("node:vm")
 
 const source = fs.readFileSync(path.join(__dirname, "..", "Status.js"), "utf8").replace(/^\.pragma library\s*$/m, "")
 const S = {}
-vm.runInNewContext(source + "\nthis.exports = { fromBrief, fromFullStatus, unavailable, barLabel, barTone, stateWord, progressLine, summaryLine, formatEta };", S)
-const { fromBrief, fromFullStatus, unavailable, barLabel, barTone, stateWord, progressLine, summaryLine, formatEta } = S.exports
+vm.runInNewContext(source + "\nthis.exports = { fromBrief, fromFullStatus, unavailable, barLabel, barText, barTone, stateWord, progressLine, summaryLine, formatEta };", S)
+const { fromBrief, fromFullStatus, unavailable, barLabel, barText, barTone, stateWord, progressLine, summaryLine, formatEta } = S.exports
 
 const brief = (fields) => JSON.stringify({ schema: "olympus.engine.brief.v1", state: "running", progress: null, blocker: null, needsYou: { count: 0, sentences: [] }, ...fields })
 
@@ -146,4 +146,15 @@ test("ETA wording", () => {
 test("before the first check the bar says Checking", () => {
   assert.equal(barLabel(null), "Checking…")
   assert.equal(barTone(null), "dim")
+})
+
+test("a quiet Olympus shows the mountain alone; words appear only when something is happening", () => {
+  assert.equal(barText(fromBrief(brief({}))), "")
+  assert.equal(barText(fromBrief(brief({ needsYou: null }))), "")
+  assert.equal(barText(unavailable("x")), "")
+  assert.equal(barText(null), "")
+  assert.equal(barText(fromBrief(brief({ progress: { unit: "files", phase: "initial", percent: 7, itemsLeft: 3, stalled: false } }))), "Indexing 7%")
+  assert.equal(barText(fromBrief(brief({ needsYou: { count: 1, sentences: ["Reconnect Gmail"] } }))), "Needs you")
+  assert.equal(barText(fromBrief(brief({ state: "stopped" }))), "Stopped")
+  assert.equal(barText(fromBrief(brief({ state: "starting" }))), "Starting…")
 })

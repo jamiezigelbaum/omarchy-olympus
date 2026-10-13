@@ -160,6 +160,16 @@ function barLabel(view) {
   return view.attentionKnown ? "Ready" : "Running"
 }
 
+// The words beside the mountain. Omarchy's own widgets are icon-only and say
+// state through the icon, so a quiet Olympus (Ready, or Running when the
+// attention list is unknown) shows the mountain alone; words appear only
+// while something is happening or needs a look.
+function barText(view) {
+  if (!view) return ""
+  var label = barLabel(view)
+  return label === "Ready" || label === "Running" || label === "Unavailable" ? "" : label
+}
+
 // normal | urgent | dim: how the bar colours the label.
 function barTone(view) {
   if (!view) return "dim"

@@ -26,7 +26,7 @@
     },
     "schema": [
       { "key": "refreshIntervalSec", "type": "integer", "label": "Check every (seconds)", "min": 15, "max": 3600, "step": 15, "defaultValue": 60 },
-      { "key": "showLabel", "type": "boolean", "label": "Show words beside the icon", "defaultValue": true, "description": "Off shows only the mountain, coloured by state." },
+      { "key": "showLabel", "type": "boolean", "label": "Show words while something is happening", "defaultValue": true, "description": "Words such as Indexing 42% or Needs you appear beside the mountain only while something is happening. Off always shows the mountain alone, coloured by state." },
       { "key": "olympusPath", "type": "path", "label": "olympus command", "defaultValue": "", "description": "Optional. Defaults to ~/.local/bin/olympus." }
     ]
   }

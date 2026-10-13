@@ -39,6 +39,7 @@ Panel {
   property bool dashboardAbandoned: false
 
   readonly property string label: Status.barLabel(view)
+  readonly property string barText: showLabel ? Status.barText(view) : ""
   readonly property string tone: Status.barTone(view)
   readonly property string progressText: view ? Status.progressLine(view.progress) : ""
   readonly property string summaryText: Status.summaryLine(view)
@@ -213,7 +214,7 @@ Panel {
     hasVisualContent: true
     fixedWidth: vertical ? -1 : (labelText.visible ? content.implicitWidth + scaledHorizontalMargin * 2 : Style.bar.iconSlot)
     fixedHeight: vertical ? Style.bar.iconSlot : -1
-    tooltipText: root.showLabel && !vertical ? "" : "Olympus: " + root.label
+    tooltipText: labelText.visible ? "" : "Olympus: " + root.label
 
     readonly property color toneColor: root.tone === "urgent"
       ? (root.bar ? root.bar.urgent : Color.urgent)
@@ -233,8 +234,8 @@ Panel {
       Text {
         id: labelText
         anchors.verticalCenter: parent.verticalCenter
-        visible: root.showLabel && !button.vertical
-        text: root.label
+        visible: root.barText !== "" && !button.vertical
+        text: root.barText
         color: button.toneColor
         font.family: button.fontFamily
         font.pixelSize: Style.font.body
