@@ -6,12 +6,11 @@ An [Omarchy](https://omarchy.org) bar widget for [Olympus](https://github.com/ja
 
 ![The Olympus panel](docs/panel.png)
 
-The widget shows the Olympus mountain in the bar, followed by a few plain words:
+Like Omarchy's own widgets, it is icon-first. While Olympus is quiet the bar shows just the mountain. Words appear beside it only while something is happening:
 
 | Bar | Meaning |
 |---|---|
-| `Ready` | Running, with nothing to do |
-| `Running` | Running, but this Olympus version can't say what needs you |
+| *(mountain only)* | Running, with nothing happening. Hover for the state. |
 | `Indexing 42%` | Building or refreshing the index |
 | `Indexing paused` | Indexing has stalled |
 | `Needs you` | Something needs you. This takes priority over indexing and is shown in your theme's urgent colour. |
@@ -29,6 +28,8 @@ omarchy plugin add https://github.com/jamiezigelbaum/omarchy-olympus.git --enabl
 ```
 
 > **Install or update only while you're at the unlocked desktop.** The Omarchy shell reloads plugin code as soon as files change under `~/.config/omarchy/plugins/`. In Omarchy 4.0.1, a reload while the screen is locked can strand the lock screen, which then shows Hyprland's "lockscreen app died" failsafe. Check `omarchy-shell lock status` first. If it happens anyway, run `hyprctl --instance 0 eval 'hl.clear_crashed_lockscreen()'` from another TTY; the shell locks again by itself.
+
+After `omarchy plugin update jamiezigelbaum.olympus`, run `omarchy-restart-shell` to load the new version. In Omarchy 4.0.1 the automatic reload re-creates the widget from the code it already loaded.
 
 Move it with `omarchy bar move jamiezigelbaum.olympus`. You can change these settings for the widget:
 
